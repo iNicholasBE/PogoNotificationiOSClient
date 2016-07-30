@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+  <metadata>
+    <link href="http://www.mapstogpx.com">
+      <text>Sverrir Sigmundarson</text>
+    </link>
+    <!--desc>Map data ©2016 Google</desc-->
+    <!--copyright author="Google Inc">
+    	<year>2016</year>
+    	<license>https://developers.google.com/maps/terms</license>
+    </copyright-->
+    <!--url>https://www.google.co.uk/maps/dir/51.1028936,4.1352013/51.1027594,4.1334299/@51.1024509,4.1332448,18z/am=t/data=!3m1!4b1!4m2!4m1!3e2?hl=nl&hl=en</url-->
+    <time>2016-07-23T17:40:53Z</time>
+  </metadata>
+  <wpt lat="51.1028936" lon="4.1352013">
+    <name>WP001</name>
+    <time>2016-07-23T17:40:53Z</time>
+  </wpt>
+  <wpt lat="51.1028936" lon="4.1351450640457">
+    <name>WP002</name>
+    <time>2016-07-23T17:40:58Z</time>
+  </wpt>
+  <wpt lat="51.1028936" lon="4.1351349037783">
+    <name>WP003</name>
+    <time>2016-07-23T17:41:03Z</time>
+  </wpt>
+  <wpt lat="51.102887744196" lon="4.1352690091741">
+    <name>WP004</name>
+    <time>2016-07-23T17:41:08Z</time>
+  </wpt>
+  <wpt lat="51.102896103221" lon="4.135272213726">
+    <name>WP005</name>
+    <time>2016-07-23T17:41:13Z</time>
+  </wpt>
+  <wpt lat="51.102879821612" lon="4.1352013">
+    <name>WP006</name>
+    <time>2016-07-23T17:41:18Z</time>
+  </wpt>
+  <wpt lat="51.1028936" lon="4.1351990595258">
+    <name>WP007</name>
+    <time>2016-07-23T17:41:23Z</time>
+  </wpt>
+  <wpt lat="51.10291" lon="4.13514">
+    <name>WP008</name>
+    <time>2016-07-23T17:41:27Z</time>
+  </wpt>
+  <wpt lat="51.1029" lon="4.13505">
+    <name>WP009</name>
+    <time>2016-07-23T17:41:32Z</time>
+  </wpt>
+  <wpt lat="51.10289" lon="4.13489">
+    <name>WP010</name>
+    <time>2016-07-23T17:41:41Z</time>
+  </wpt>
+  <wpt lat="51.10284" lon="4.13445">
+    <name>WP011</name>
+    <time>2016-07-23T17:42:04Z</time>
+  </wpt>
+  <wpt lat="51.10275" lon="4.13343">
+    <name>WP012</name>
+    <time>2016-07-23T17:42:56Z</time>
+  </wpt>
+  <wpt lat="51.1027527" lon="4.1334314">
+    <name>WP013</name>
+    <time>2016-07-23T17:42:57Z</time>
+  </wpt>
+  <wpt lat="51.102764527076" lon="4.133444272606">
+    <name>WP014</name>
+    <time>2016-07-23T17:43:02Z</time>
+  </wpt>
+  <wpt lat="51.102745665744" lon="4.133445545752">
+    <name>WP015</name>
+    <time>2016-07-23T17:43:07Z</time>
+  </wpt>
+  <wpt lat="51.102773810249" lon="4.1334440456542">
+    <name>WP016</name>
+    <time>2016-07-23T17:43:12Z</time>
+  </wpt>
+  <wpt lat="51.102726823317" lon="4.1334314">
+    <name>WP017</name>
+    <time>2016-07-23T17:43:17Z</time>
+  </wpt>
+  <wpt lat="51.102785562798" lon="4.13343722532">
+    <name>WP018</name>
+    <time>2016-07-23T17:43:22Z</time>
+  </wpt>
+  <wpt lat="51.102769706481" lon="4.1334267371842">
+    <name>WP019</name>
+    <time>2016-07-23T17:43:27Z</time>
+  </wpt>
+</gpx>
