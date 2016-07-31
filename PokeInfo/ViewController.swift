@@ -153,7 +153,8 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
     // Transform json to Pokemon Object
     func makePokemon (json:JSON)-> Pokemon{
         print(json);
-         let pokemon = Pokemon (pokemon_name: json["pokemon_name"].string!, pokemon_id: json["pokemon_id"].double!,spawnpoint_id: json["spawnpoint_id"].string!, longitude: json["longitude"].double!,latitude: json["latitude"].double!, time_till_hidden_ms: json["time_till_hidden_ms"].double!)
+        print(json);
+         let pokemon = Pokemon (pokemon_name: json["pokemon_name"].string!, pokemon_id: json["pokemon_id"].double!,spawnpoint_id: json["spawn_point_id"].string!, longitude: json["longitude"].double!,latitude: json["latitude"].double!, time_till_hidden_ms: json["time_till_hidden_ms"].double!)
         return pokemon
     }
     
@@ -164,7 +165,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
         
         // Show pokemons on map
         let urlPathPokemon:String = "http://37.139.15.120:5000/nearby";
-        Alamofire.request(.POST,urlPathPokemon, parameters: ["auth_service": "ptc","username":"nxmap123","password" : "Azerty123", "lat" : newLocation.coordinate.latitude.description, "lng" :  newLocation.coordinate.longitude.description])
+        Alamofire.request(.POST,urlPathPokemon, parameters: ["auth_service": "ptc","username":"nxmap123","password" : "Azerty123", "lat" : newLocation.coordinate.latitude.description, "lng" :  newLocation.coordinate.longitude.description, "radius" : 3])
             .responseJSON { response in
                 let json = JSON(data : response.data!)
                 print(json)
