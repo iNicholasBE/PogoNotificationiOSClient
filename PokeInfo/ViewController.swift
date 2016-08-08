@@ -27,6 +27,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
     var currentLocation = CLLocation();
     var oldLocation = CLLocation();
     
+    @IBOutlet weak var connectedLabel: UILabel!
     var allPokemons = [Pokemon]();
     var audioPlayer = AVAudioPlayer()
     var initizalized = false;
@@ -38,16 +39,48 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
         manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         manager.delegate = self
         manager.requestAlwaysAuthorization()
-        manager.pausesLocationUpdatesAutomatically = true;
+        manager.allowsBackgroundLocationUpdates = true;
+        //manager.pausesLocationUpdatesAutomatically = true;
         return manager
     }()
 
     
+    override func viewDidDisappear(animated: Bool) {
+        //Check if connection is still oké, otherwise let them login again.
+        fireCalls();
+        
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Check if user is loged-in otherwise show login-screen
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.objectForKey("userLoggedIn") == nil {
+            if let loginController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController {
+                self.navigationController?.presentViewController(loginController, animated: true, completion: nil)
+            }
+        }
+        
         locationManager.startUpdatingLocation()
         pokeMap.delegate = self
-        startAudio()
+        
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            print("AVAudioSession Category Playback OK")
+            do {
+                try AVAudioSession.sharedInstance().setActive(true)
+                print("AVAudioSession is Active")
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        playBackgroundMusic("sea.mp3")
+        
         var helloWorldTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(ViewController.fireCalls), userInfo: nil, repeats: true)
     }
     
@@ -67,27 +100,40 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
         do {
             audioPlayer = try AVAudioPlayer.init(contentsOfURL: fileURL, fileTypeHint: AVFileTypeMPEGLayer3)
             audioPlayer.numberOfLoops = -1
-            audioPlayer.volume = 1
+            audioPlayer.volume = 0.2
         } catch {
             self.presentViewController(UIAlertController.init(title: "Error", message: "Error Message", preferredStyle: .Alert), animated: true, completion: nil)
         }
         audioPlayer.play()
+        
     }
 
     
     @IBAction func switchChanged(sender: UISwitch) {
         
         if sender.on{
-            audioPlayer.play()
+            //audioPlayer.play()
             timer.fire()
             locationManager.startUpdatingLocation()
         }
         else{
-            audioPlayer.pause()
+            //audioPlayer.pause()
             timer.invalidate()
             locationManager.stopUpdatingLocation()
         }
         
+    }
+    
+    func changeConnectionStatus(connected : Bool){
+        if connected == true {
+            
+            connectedLabel.textColor = UIColor.greenColor()
+            connectedLabel.text = "Connected";
+        }
+        else {
+            connectedLabel.textColor = UIColor.redColor()
+            connectedLabel.text = "Disconnected";
+        }
     }
     
     
@@ -109,7 +155,6 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
     func showOnMap(pokemon: Pokemon){
         print (pokemon.pokemon_name);
         
-        // Sometimes there is no latitude or longitude so I check if latitude exists
             let lat = pokemon.latitude
             let lng = pokemon.longitude;
             let annotation = MKPointAnnotation()
@@ -119,12 +164,9 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
             print (annotation.title)
 
             self.pokeMap.addAnnotation(annotation)
-            //self.pokeMap.showAnnotations(self.pokeMap.annotations, animated: true)
             self.pokeMap.zoomEnabled = true;
             self.showAnnotations();
-            //self.pokeMap.selectAnnotation(self.pokeMap.annotations[0], animated: true)
-            //self.pokeMap.selectAnnotation(self.pokeMap.annotations[self.pokeMap.annotations.count], animated: true)
-    }
+             }
     
     func mapView(mapView: MKMapView!,
                  viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
@@ -133,6 +175,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
             //return nil so map view draws "blue dot" for standard user location
             return nil
         }
+        
         let pokemonId = annotation.title!
         let reuseId = pokemonId
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId!)
@@ -141,8 +184,8 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
             pinView!.canShowCallout = true
             let image = UIImage(named:pokemonId!)!
             pinView!.image = image
-            
         }
+            
         else {
             pinView!.annotation = annotation
         }
@@ -186,6 +229,10 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
                     }
                     // Overwrite global wildArr with new updated one
                     self.wildArr = tempWild;
+                    self.changeConnectionStatus(true)
+                }
+                else {
+                    self.changeConnectionStatus(false)
                 }
                 self.showPokemonsAndDeleteOldOnes()
         };
@@ -200,8 +247,6 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
                 print (json);
                 if let result = json[0]["result"].double {
                     if result == 1{
-                        
-                        
                         if UIApplication.sharedApplication().applicationState == .Active {
                             // create the alert
                             let alert = UIAlertController(title: "Pokestop Spinned", message: "50 XP and some items Gained", preferredStyle: UIAlertControllerStyle.Alert)
@@ -247,13 +292,13 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
             }
         }
     }
+    
     func locationHandler(newLocation: CLLocation){
         currentLocation = newLocation;
-    
     }
     
     func showAnnotations(){
-            }
+    }
     
     func deleteAnnotations(){
         for var annotation in self.pokeMap.annotations{
@@ -269,7 +314,6 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
         let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
         self.pokeMap.setRegion(region, animated: true)
         self.pokeMap.showsUserLocation = true
-
     }
     
     
@@ -306,4 +350,25 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
     }
 
 
+}
+
+import AVFoundation
+
+var backgroundMusicPlayer = AVAudioPlayer()
+
+func playBackgroundMusic(filename: String) {
+//NSBundle.mainBundle().URLForResource(<#T##name: String?##String?#>, withExtension: <#T##String?#>)
+    let url = NSBundle.mainBundle().URLForResource(filename, withExtension: nil)
+    guard let newURL = url else {
+        print("Could not find file: \(filename)")
+        return
+    }
+    do {
+        backgroundMusicPlayer = try AVAudioPlayer(contentsOfURL: newURL)
+        backgroundMusicPlayer.numberOfLoops = -1
+        backgroundMusicPlayer.prepareToPlay()
+        backgroundMusicPlayer.play()
+    } catch let error as NSError {
+        print(error.description)
+    }
 }

@@ -46,6 +46,7 @@
 	<string>We need your location information to update you about pokemons nearby</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>plays audio</string>
 		<string>audio</string>
 		<string>fetch</string>
 		<string>location</string>
