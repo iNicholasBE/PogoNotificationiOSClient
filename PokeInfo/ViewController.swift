@@ -208,7 +208,8 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
         
         // Show pokemons on map
         let urlPathPokemon:String = "http://37.139.15.120:5000/nearby";
-        Alamofire.request(.POST,urlPathPokemon, parameters: ["auth_service": "ptc","username":"nxmap123","password" : "Azerty123", "lat" : newLocation.coordinate.latitude.description, "lng" :  newLocation.coordinate.longitude.description, "radius" : 3])
+        print("New Location latitude: " + newLocation.coordinate.latitude.description);
+        Alamofire.request(.POST,urlPathPokemon, parameters: ["lat" : newLocation.coordinate.latitude.description, "lng" :  newLocation.coordinate.longitude.description, "radius" : 3])
             .responseJSON { response in
                 let json = JSON(data : response.data!)
                 print(json)
@@ -241,7 +242,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
         
         // Spin pokestops
         let urlPathPokemonForts:String = "http://37.139.15.120:5000/forts";
-        Alamofire.request(.POST,urlPathPokemonForts, parameters: ["auth_service": "ptc","username":"nxmap123","password" : "Azerty123", "lat" : newLocation.coordinate.latitude.description, "lng" :  newLocation.coordinate.longitude.description])
+        Alamofire.request(.POST,urlPathPokemonForts, parameters: ["lat" : newLocation.coordinate.latitude.description, "lng" :  newLocation.coordinate.longitude.description])
             .responseJSON { response in
                 let json = JSON(data : response.data!)
                 print (json);
@@ -337,8 +338,9 @@ class ViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDelega
         }
         
         do {
-            print(newLocation);
-            self.locationHandler(newLocation)
+            //print(newLocation);
+            self.currentLocation = newLocation
+            //self.locationHandler(newLocation)
         } catch {
             NSLog("No location found yet");
         }

@@ -40,7 +40,7 @@ class IVTableControllerTableViewController: UITableViewController {
             .responseJSON { response in
                 let json = JSON(data : response.data!)
                 print(json)
-                if json.count == 0 {
+                if json.count == 0 || json["success"].bool == false {
                     return;
                 }
                 self.allPokemons.removeAll()
